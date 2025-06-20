@@ -3,6 +3,7 @@ package com.example.demo1;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,24 +22,35 @@ public class ToDoController {
 	}
 	
 	@GetMapping
-	public List<ToDo> getToDos() {
+	public List<ToDo> getTodos() {
 		return list;
 	}
 	
 	@GetMapping("/{id}")
-	public ToDo getToDo(@PathVariable int id) {
-		int index = id -1;
+	public ToDo getTodo(@PathVariable long id) {
+		long index = id -1;
 		
 		if(index < 0 || index >= list.size()) {
-			throw new RuntimeException("指定されたIDのToDoは存在しません" + id);
+			throw new RuntimeException("指定されたIDのToDoは存在しません： " + id);
 		}
-		return list.get(index);
+		return list.get((int)index);
 	}
 	
 	@PostMapping
-	public ToDo postToDo(@RequestBody ToDo newtodo) {
+	public ToDo postTodo(@RequestBody ToDo newtodo) {
 		list.add(newtodo);
 		return newtodo;
+	}
+	
+	@DeleteMapping("/{id}")
+	public String deleteTodo(@PathVariable long id) {
+		long index = id - 1;
+		
+		if(index < 0 || index > list.size()) {
+			throw new RuntimeException("指定されたIDのToDoは存在しません： " + id);
+		}
+		list.remove((int)index);
+		return "ID" + id + "のToDOを削除しました";
 	}
 	
 

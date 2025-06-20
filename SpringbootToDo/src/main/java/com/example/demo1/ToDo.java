@@ -3,7 +3,7 @@ package com.example.demo1;
 public class ToDo {
 	private static int count = 1;
 	
-	private final int id;
+	private final long id;
 	private String title;
 	private String status;
 
@@ -14,7 +14,7 @@ public class ToDo {
 		this.status = "未着手";
 	}
 	
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	
